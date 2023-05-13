@@ -39,4 +39,7 @@ public class DefectRegister {
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_defect_product"))
     private Product product;
+
+    @Column(name = "cause")
+    private String cause;
 }

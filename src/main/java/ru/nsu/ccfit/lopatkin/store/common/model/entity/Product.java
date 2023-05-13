@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.nsu.ccfit.lopatkin.store.common.validator.IsPrice;
 
-import javax.validation.constraints.Positive;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @NoArgsConstructor
