@@ -21,6 +21,7 @@ CREATE TABLE products
     document_id     VARCHAR(150),
     is_guarantee    BOOLEAN      NOT NULL,
     customs_price   FLOAT        NOT NULL CHECK (customs_price >= 0),
+    arrival_date    TIMESTAMP,
     final_price     FLOAT        NOT NULL CHECK (price >= 0),
     final_discount  INTEGER      NOT NULL CHECK (discount >= 0 AND discount <= 100)
 );

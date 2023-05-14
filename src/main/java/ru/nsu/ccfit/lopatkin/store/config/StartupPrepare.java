@@ -61,11 +61,12 @@ public class StartupPrepare {
 
     private StorageCellProduct unpackSingleProduct(Product product, StorageCell storageCell) {
         StorageCellProduct storageCellProduct = new StorageCellProduct();
+        product.setArrivalDate(LocalDateTime.now());
+
         StorageCellProductId storageCellProductId = new StorageCellProductId(storageCell.getId(), product.getId());
         storageCellProduct.setId(storageCellProductId);
         storageCellProduct.setProduct(product);
         storageCellProduct.setStorageCell(storageCell);
-        storageCellProduct.setArrivalDate(LocalDateTime.now());
         storageCellProduct.setCount(storageCell.getFreeSpace() / product.getProductSize());
         storageCell.getStorageCellProducts().add(storageCellProduct);
         return storageCellProduct;

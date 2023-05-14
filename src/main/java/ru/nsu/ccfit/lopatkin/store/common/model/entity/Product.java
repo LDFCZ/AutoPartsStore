@@ -18,6 +18,8 @@ import ru.nsu.ccfit.lopatkin.store.common.validator.IsPrice;
 
 import jakarta.validation.constraints.Positive;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,7 +40,6 @@ public class Product {
     @JoinColumn(name = "product_type_id", nullable = false)
     private ProductType productType;
 
-    @Positive
     @Column(name = "product_size", nullable = false)
     private Integer productSize;
 
@@ -46,7 +47,6 @@ public class Product {
     @JoinColumn(name = "supplier_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_supplier"))
     private Supplier supplier;
 
-    @IsPrice
     @Column(name = "price", nullable = false)
     private Double price;
 
@@ -59,11 +59,12 @@ public class Product {
     @Column(name = "is_guarantee", nullable = false)
     private Boolean isGuarantee;
 
-    @IsPrice
     @Column(name = "customs_price", nullable = false)
     private Double customsPrice;
 
-    @IsPrice
+    @Column(name = "arrival_date")
+    private LocalDateTime arrivalDate;
+
     @Column(name = "final_price", nullable = false)
     private Double finalPrice;
 

@@ -36,9 +36,6 @@ public class StorageCellProduct {
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_storage_cell_product_product"))
     private Product product;
 
-    @Column(name = "arrival_date", nullable = false)
-    private LocalDateTime arrivalDate;
-
     @Column(name = "count", nullable = false)
     private Integer count;
 }

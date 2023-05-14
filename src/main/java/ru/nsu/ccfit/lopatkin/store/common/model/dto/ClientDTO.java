@@ -15,6 +15,12 @@ import jakarta.validation.constraints.Size;
 @Setter
 public class ClientDTO extends BaseDTO {
 
+    public ClientDTO(Long id, String name, String email) {
+        super(id);
+        this.name = name;
+        this.email = email;
+    }
+
     @NotBlank(message = "Имя не может быть пустым")
     @Size(min = 2, max = 50, message = "Имя должно быть длиннее 1-го символа, но менее 50")
     private String name;

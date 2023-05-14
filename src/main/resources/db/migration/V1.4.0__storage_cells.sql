@@ -14,7 +14,6 @@ CREATE TABLE storage_cells_products
 (
     cell_id      INTEGER REFERENCES storage_cells (id) ON DELETE CASCADE,
     product_id   INTEGER REFERENCES products (id) ON DELETE CASCADE,
-    arrival_date TIMESTAMP NOT NULL, -- TODO Унести это в продукт
     count        INTEGER   NOT NULL CHECK ( count > 0 ),
     PRIMARY KEY (cell_id, product_id)
 );
