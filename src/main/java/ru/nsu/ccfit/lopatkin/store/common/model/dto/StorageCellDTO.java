@@ -22,6 +22,8 @@ public class StorageCellDTO extends BaseDTO {
         this.freeSpace = freeSpace;
     }
 
+    private StorageDTO storage;
+
     @NotBlank
     @Positive
     private Integer size;
@@ -30,6 +32,6 @@ public class StorageCellDTO extends BaseDTO {
     @Positive
     private Integer freeSpace;
 
-    private List<ProductDTO> products = new ArrayList<>();
+    private List<StorageCellProductDTO> storageCellProducts = new ArrayList<>();
 
 }
