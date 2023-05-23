@@ -7,11 +7,11 @@ import ru.nsu.ccfit.lopatkin.store.common.model.entity.ProductType;
 @Component
 public class ProductTypeMapper {
 
-    ProductTypeDTO productTypeToProductTypeDTO(ProductType productType) {
+    public ProductTypeDTO productTypeToProductTypeDTO(ProductType productType) {
         return new ProductTypeDTO(productType.getId(), productType.getProductTypeName());
     }
 
-    ProductType productTypeDTOTOProductType(ProductTypeDTO productTypeDTO) {
+    public ProductType productTypeDTOTOProductType(ProductTypeDTO productTypeDTO) {
         return new ProductType(productTypeDTO.getId(), productTypeDTO.getProductTypeName());
     }
 }

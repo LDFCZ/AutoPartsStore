@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class DefectDTO extends BaseDTO {
 
-    public DefectDTO(Long id, LocalDateTime issueDate, OrderDTO order, ProductDTO product, String cause) {
+    public DefectDTO(Long id, LocalDateTime issueDate, ClientOrderDTO order, ProductDTO product, String cause) {
         super(id);
         this.issueDate = issueDate;
         this.order = order;
@@ -24,7 +24,7 @@ public class DefectDTO extends BaseDTO {
 
     private LocalDateTime issueDate;
 
-    private OrderDTO order;
+    private ClientOrderDTO order;
 
 
     private ProductDTO product;

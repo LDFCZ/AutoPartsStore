@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.ccfit.lopatkin.store.common.model.dto.OrderDTO;
+import ru.nsu.ccfit.lopatkin.store.common.model.dto.ClientOrderDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.dto.ProductDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.dto.SupplierDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.dto.report.response.CashReportDTO;
@@ -102,7 +102,7 @@ public class SalesReportController {
     /**
      * Получить скорость оборота денежных средств, вложенных в товар (как товар быстро продается).
      *
-     * @return количество товара * цена товара / время проведенное на складе
+     * @return количество проданного товара * цена товара / количество купленного * цена покупки
      */
     @GetMapping("/turnover-rate/{id}")
     public Float getRateOfTurnover(@PathVariable String id) {
@@ -113,10 +113,10 @@ public class SalesReportController {
      * Получить перечень и общее количество заявок от покупателей на
      * ожидаемый товар, подсчитать на какую сумму даны заявки.
      *
-     * @return {@link OrderDTO}
+     * @return {@link ClientOrderDTO}
      */
     @GetMapping("/outstanding-orders")
-    public OrderDTO getOutstandingOrderReport() {
+    public ClientOrderDTO getOutstandingOrderReport() {
         return null;
     }
 }

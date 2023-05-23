@@ -1,6 +1,7 @@
 package ru.nsu.ccfit.lopatkin.store.processor.controller.primitive;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,27 +22,27 @@ import ru.nsu.ccfit.lopatkin.store.common.model.dto.SupplierDTO;
 public class SupplierController {
 
     @GetMapping("/all-suppliers")
-    public ResponseEntity<?> getSuppliers() {
+    public Page<SupplierDTO> getSuppliers() {
         return null;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getSupplier(@PathVariable String id) {
+    public SupplierDTO getSupplier(@PathVariable Long id) {
         return null;
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createSupplier(@RequestBody SupplierDTO supplierDTO) {
+    public SupplierDTO createSupplier(@RequestBody SupplierDTO supplierDTO) {
         return null;
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateSupplier(@RequestBody SupplierDTO supplierDTO) {
+    public SupplierDTO updateSupplier(@RequestBody SupplierDTO supplierDTO) {
         return null;
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteSupplier(@PathVariable String id) {
+    public Long deleteSupplier(@PathVariable Long id) {
         return null;
     }
 }

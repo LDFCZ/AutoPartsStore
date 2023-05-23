@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -21,6 +25,9 @@ import org.springframework.core.env.Environment;
 @Slf4j
 public class RabbitMQConfig {
     private static final String RABBIT_MQ_URI_PROPERTY = "rabbitmq.uri.serial.bus";
+
+    private static final String RABBITMQ_ORDER_EXCHANGE = "rabbitmq.exchange.order";
+    private static final String RABBITMQ_ORDER_QUEUE = "rabbitmq.queue.order";
 
     private final Environment environment;
 
@@ -69,5 +76,20 @@ public class RabbitMQConfig {
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(messageConverter);
         return factory;
+    }
+
+    @Bean("OrderExchange")
+    public FanoutExchange orderExchange() {
+        return new FanoutExchange(environment.getProperty(RABBITMQ_ORDER_EXCHANGE, "AP_Store.order.exchange"));
+    }
+
+    @Bean("OrderQueue")
+    public Queue orderQueue() {
+        return new Queue(environment.getProperty(RABBITMQ_ORDER_QUEUE, "AP_Store.order.queue"));
+    }
+
+    @Bean
+    public Binding orderBinding(Queue orderQueue, FanoutExchange orderExchange) {
+        return BindingBuilder.bind(orderQueue).to(orderExchange);
     }
 }

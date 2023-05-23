@@ -31,7 +31,7 @@ public class ProductMapper {
                 );
     }
 
-    public Product ProductDTOToProduct(ProductDTO productDTO) {
+    public Product productDTOToProduct(ProductDTO productDTO) {
         return new Product(
                 productDTO.getId(),
                 productDTO.getProductName(),

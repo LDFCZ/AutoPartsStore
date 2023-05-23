@@ -47,7 +47,7 @@ public class ClientService {
         if (oldClientOptional.isEmpty()) {
             throw new LogicException("Не найден клиент с id: " + updatedClientDTO.getId());
         }
-        if (clientRepository.findClientByEmail(updatedClientDTO.getEmail()).isPresent()) {
+        if (clientRepository.findClientByEmailAndIdNot(updatedClientDTO.getEmail(), updatedClientDTO.getId()).isPresent()) {
             throw new LogicException("Клиент с email=" + updatedClientDTO.getEmail() + " уже существует");
         }
         Client oldClient = oldClientOptional.get();

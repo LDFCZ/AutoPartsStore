@@ -7,16 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderDTO extends BaseDTO {
+public class ClientOrderDTO extends BaseDTO {
 
-    public OrderDTO(Long id, LocalDateTime orderDate, LocalDateTime orderEndDate, ClientDTO client, boolean isCompleted) {
+    public ClientOrderDTO(Long id, LocalDateTime orderDate, LocalDateTime orderEndDate, ClientDTO client, boolean isCompleted) {
         super(id);
         this.orderDate = orderDate;
         this.orderEndDate = orderEndDate;
@@ -33,5 +33,5 @@ public class OrderDTO extends BaseDTO {
 
     private boolean isCompleted;
 
-    private List<ProductDTO> products = new ArrayList<>();
+    private Map<ProductDTO, Integer> products = new HashMap<>();
 }

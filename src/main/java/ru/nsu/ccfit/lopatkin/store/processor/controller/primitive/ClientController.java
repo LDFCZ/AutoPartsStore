@@ -29,7 +29,7 @@ public class ClientController {
     @GetMapping("/all-clients")
     public Page<ClientDTO> getClients(@RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
                                       @RequestParam(value = "limit", defaultValue = "20") @Min(1) @Max(100) Integer limit) {
-        log.info("Запрос на получение страницы с клиернтами");
+        log.info("Запрос на получение страницы с клиентами");
         return clientService.getPageWithClients(offset, limit);
     }
 

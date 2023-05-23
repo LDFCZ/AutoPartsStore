@@ -16,7 +16,7 @@ public class StorageCellMapper {
 
     private final StorageMapper storageMapper;
 
-    StorageCellDTO storageCellToStorageCellDTO(StorageCell storageCell) {
+    public StorageCellDTO storageCellToStorageCellDTO(StorageCell storageCell) {
         StorageCellDTO storageCellDTO = new StorageCellDTO(storageCell.getId(), storageCell.getSize(), storageCell.getFreeSpace());
         storageCellDTO.setStorage(storageMapper.storageToStorageDTO(storageCell.getStorage()));
         storageCell.getStorageCellProducts().forEach(storageCellProduct -> {
@@ -26,7 +26,7 @@ public class StorageCellMapper {
         return storageCellDTO;
     }
 
-    StorageCell storageCellDTOToStorageCell(StorageCellDTO storageCellDTO) {
+    public StorageCell storageCellDTOToStorageCell(StorageCellDTO storageCellDTO) {
         StorageCell storageCell = new StorageCell();
         storageCell.setId(storageCellDTO.getId());
         storageCell.setSize(storageCellDTO.getSize());
@@ -36,7 +36,7 @@ public class StorageCellMapper {
             storageCell.getStorageCellProducts().add(new StorageCellProduct(
                     new StorageCellProductId(storageCell.getId(), storageCellProductDTO.getProduct().getId()),
                     storageCell,
-                    productMapper.ProductDTOToProduct(storageCellProductDTO.getProduct()),
+                    productMapper.productDTOToProduct(storageCellProductDTO.getProduct()),
                     storageCellProductDTO.getCount()
             ));
         });

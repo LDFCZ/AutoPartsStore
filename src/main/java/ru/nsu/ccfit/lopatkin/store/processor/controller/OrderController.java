@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nsu.ccfit.lopatkin.store.common.model.dto.OfferDTO;
-import ru.nsu.ccfit.lopatkin.store.common.model.dto.OrderDTO;
+import ru.nsu.ccfit.lopatkin.store.common.model.dto.ClientOrderDTO;
 
 /**
  *  Контроллер для работы с заказами клиентов
@@ -32,12 +31,12 @@ public class OrderController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<?> createOrder(@RequestBody ClientOrderDTO clientOrderDTO) {
         return null;
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<?> updateOrder(@RequestBody ClientOrderDTO clientOrderDTO) {
         return null;
     }
 
