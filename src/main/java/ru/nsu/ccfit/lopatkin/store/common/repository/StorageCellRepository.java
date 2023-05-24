@@ -10,6 +10,8 @@ public interface StorageCellRepository extends JpaRepository<StorageCell, Long> 
 
     List<StorageCell> findAllByOrderByFreeSpaceDesc();
 
+    Optional<StorageCell> findFirstByFreeSpaceIsGreaterThanEqualOrderByFreeSpaceDesc(Integer freeSpace);
+
     Optional<StorageCell> findFirstByFreeSpaceIsGreaterThanOrderByFreeSpaceDesc(Integer freeSpace);
 
 }

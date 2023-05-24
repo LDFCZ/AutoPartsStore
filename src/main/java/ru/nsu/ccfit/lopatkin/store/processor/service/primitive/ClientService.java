@@ -11,6 +11,7 @@ import ru.nsu.ccfit.lopatkin.store.common.model.dto.ClientDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.entity.Client;
 import ru.nsu.ccfit.lopatkin.store.common.repository.ClientRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,10 @@ public class ClientService {
     public Page<ClientDTO> getPageWithClients(Integer offset, Integer limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         return clientRepository.findAll(pageable).map(clientMapper::clintToClientDTO);
+    }
+
+    public List<ClientDTO> getClients() {
+        return clientRepository.findAll().stream().map(clientMapper::clintToClientDTO).toList();
     }
 
     public ClientDTO getClintById(Long id) {

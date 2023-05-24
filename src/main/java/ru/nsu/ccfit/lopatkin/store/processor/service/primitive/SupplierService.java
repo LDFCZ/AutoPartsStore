@@ -11,6 +11,7 @@ import ru.nsu.ccfit.lopatkin.store.common.model.dto.SupplierDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.entity.Supplier;
 import ru.nsu.ccfit.lopatkin.store.common.repository.SupplierRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,10 @@ public class SupplierService {
     public Page<SupplierDTO> getPageWithSuppliers(Integer offset, Integer limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         return supplierRepository.findAll(pageable).map(supplierMapper::supplierToSupplierDTO);
+    }
+
+    public List<SupplierDTO> getSuppliers() {
+        return supplierRepository.findAll().stream().map(supplierMapper::supplierToSupplierDTO).toList();
     }
 
     public SupplierDTO getSupplierById(Long id) {

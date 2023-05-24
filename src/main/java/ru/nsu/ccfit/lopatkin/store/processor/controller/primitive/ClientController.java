@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import ru.nsu.ccfit.lopatkin.store.processor.service.primitive.ClientService;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
 
 /**
  *  Контроллер для работы с клиентами
@@ -26,11 +27,17 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    @GetMapping("/all-clients")
-    public Page<ClientDTO> getClients(@RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
+    @GetMapping("/all-clients-page")
+    public Page<ClientDTO> getClientsPage(@RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
                                       @RequestParam(value = "limit", defaultValue = "20") @Min(1) @Max(100) Integer limit) {
         log.info("Запрос на получение страницы с клиентами");
         return clientService.getPageWithClients(offset, limit);
+    }
+
+    @GetMapping("/all-clients")
+    public List<ClientDTO> getClients() {
+        log.info("Запрос на получение всех клиентов");
+        return clientService.getClients();
     }
 
     @GetMapping("/{id}")

@@ -9,14 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.ccfit.lopatkin.store.common.exception.LogicException;
 import ru.nsu.ccfit.lopatkin.store.common.mapper.ClientOrderMapper;
 import ru.nsu.ccfit.lopatkin.store.common.mapper.ShopOrderMapper;
+import ru.nsu.ccfit.lopatkin.store.common.mapper.SupplierMapper;
 import ru.nsu.ccfit.lopatkin.store.common.model.dto.ClientOrderDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.dto.ProductDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.dto.ShopOrderDTO;
+import ru.nsu.ccfit.lopatkin.store.common.model.dto.SupplierDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.entity.ClientOrder;
 import ru.nsu.ccfit.lopatkin.store.common.model.entity.ClientOrderProduct;
+import ru.nsu.ccfit.lopatkin.store.common.model.entity.Offer;
 import ru.nsu.ccfit.lopatkin.store.common.model.entity.ShopOrder;
 import ru.nsu.ccfit.lopatkin.store.common.model.entity.StorageCellProduct;
 import ru.nsu.ccfit.lopatkin.store.common.repository.ClientOrderRepository;
+import ru.nsu.ccfit.lopatkin.store.common.repository.OfferRepository;
 import ru.nsu.ccfit.lopatkin.store.common.repository.ShopOrderRepository;
 import ru.nsu.ccfit.lopatkin.store.common.repository.StorageCellsProductsRepository;
 import ru.nsu.ccfit.lopatkin.store.processor.service.messaging.OrderMessagingService;
@@ -43,10 +47,20 @@ public class OrderService {
 
     private final OrderMessagingService messagingService;
 
+    private final SupplierMapper supplierMapper;
+
+    private final OfferRepository offerRepository;
+
+    private final OfferService offerService;
+
 
     public Page<ClientOrderDTO> getClientOrdersPage(Integer offset, Integer limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         return clientOrderRepository.findAll(pageable).map(clientOrderMapper::clientOrderToClientOrderDTO);
+    }
+
+    public List<ClientOrderDTO> getClientOrders() {
+        return clientOrderRepository.findAll().stream().map(clientOrderMapper::clientOrderToClientOrderDTO).toList();
     }
 
     public Page<ShopOrderDTO> getShopOrdersPage(Integer offset, Integer limit) {
@@ -87,8 +101,10 @@ public class OrderService {
         );
         ClientOrder completedClientOrder = clientOrderRepository.save(clientOrderMapper.clientOrderDTOToClientOrder(completedOrderDTO));
         collectOrder(completedClientOrder);
-        ClientOrder uncompletedClientOrder = clientOrderRepository.save(clientOrderMapper.clientOrderDTOToClientOrder(clientOrderDTO));
-        messagingService.sendOrderForProcessing(clientOrderMapper.clientOrderToClientOrderDTO(uncompletedClientOrder));
+        if (!clientOrderDTO.getProducts().isEmpty()) {
+            ClientOrder uncompletedClientOrder = clientOrderRepository.save(clientOrderMapper.clientOrderDTOToClientOrder(clientOrderDTO));
+            messagingService.sendOrderForProcessing(clientOrderMapper.clientOrderToClientOrderDTO(uncompletedClientOrder));
+        }
         messagingService.sendOrderForProcessing(clientOrderMapper.clientOrderToClientOrderDTO(completedClientOrder));
         return clientOrderMapper.clientOrderToClientOrderDTO(completedClientOrder);
     }
@@ -96,6 +112,20 @@ public class OrderService {
     public ShopOrderDTO createShopOrder(ShopOrderDTO shopOrderDTO) {
         ShopOrder shopOrder = shopOrderRepository.save(shopOrderMapper.shopOrderDTOToShopOrder(shopOrderDTO));
         return shopOrderMapper.shopOrderToShopOrderDTO(shopOrder);
+    }
+
+    public void completeShopOrder(Long shopOrderId, SupplierDTO supplierDTO) {
+        Optional<ShopOrder> shopOrderOptional = shopOrderRepository.findById(shopOrderId);
+        if (shopOrderOptional.isPresent()) {
+            ShopOrder shopOrder = shopOrderOptional.get();
+            Offer offer = new Offer();
+            offer.setCount(shopOrder.getTotalCount());
+            offer.setProduct(shopOrder.getProduct());
+            offer.setSupplier(supplierMapper.supplierDTOToSupplier(supplierDTO));
+            offer = offerRepository.save(offer);
+            offerService.completeOffer(offer.getId());
+        }
+        throw new LogicException("Не найден заказ магазина с id: " + shopOrderId);
     }
 
     private boolean isProductReady(ProductDTO productDTO, Integer count) {

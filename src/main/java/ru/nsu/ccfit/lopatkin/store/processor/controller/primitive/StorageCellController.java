@@ -35,13 +35,4 @@ public class StorageCellController {
         return null;
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateStorageCell(@RequestBody StorageCellDTO storageCellDTO) {
-        return null;
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStorageCell(@PathVariable String id) {
-        return null;
-    }
 }

@@ -16,8 +16,8 @@ import ru.nsu.ccfit.lopatkin.store.common.model.dto.StorageDTO;
  * Контроллер для работы с хранилищами
  */
 @Slf4j
-@RestController
-@RequestMapping("/processing/storages")
+//@RestController
+//@RequestMapping("/processing/storages")
 public class StorageController {
 
     @GetMapping("/all-storages")
@@ -32,16 +32,6 @@ public class StorageController {
 
     @PostMapping("/new")
     public ResponseEntity<?> createStorage(@RequestBody StorageDTO storageDTO) {
-        return null;
-    }
-
-    @PutMapping("/update")
-    public ResponseEntity<?> updateStorage(@RequestBody StorageDTO storageDTO) {
-        return null;
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteStorage(@PathVariable String id) {
         return null;
     }
 }

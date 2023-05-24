@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.nsu.ccfit.lopatkin.store.common.model.dto.ProductDTO;
 import ru.nsu.ccfit.lopatkin.store.processor.service.primitive.ProductService;
 
+import java.util.List;
+
 /**
  * Контроллер для работы с продуктами (запчастями)
  */
@@ -30,14 +32,20 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/all-products")
-    public Page<ProductDTO> getProducts(@RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
+    @GetMapping("/all-products-page")
+    public Page<ProductDTO> getProductsPage(@RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
                                         @RequestParam(value = "limit", defaultValue = "20") @Min(1) @Max(100) Integer limit) {
         log.info("Запрос на получение страницы с продуктами (деталями)");
         return productService.getPageWithProducts(offset, limit);
     }
 
-    //фильтр по имени
+    //TODO фильтр по имени
+
+    @GetMapping("/all-products")
+    public List<ProductDTO> getProducts() {
+        log.info("Запрос на получение всех продуктов (деталей)");
+        return productService.getProducts();
+    }
 
     @GetMapping("/{id}")
     public ProductDTO getProduct(@PathVariable Long id) {

@@ -11,6 +11,7 @@ import ru.nsu.ccfit.lopatkin.store.common.model.dto.ProductDTO;
 import ru.nsu.ccfit.lopatkin.store.common.model.entity.Product;
 import ru.nsu.ccfit.lopatkin.store.common.repository.ProductRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,10 @@ public class ProductService {
     public Page<ProductDTO> getPageWithProducts(Integer offset, Integer limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         return productRepository.findAll(pageable).map(productMapper::productToProductDTO);
+    }
+
+    public List<ProductDTO> getProducts() {
+        return productRepository.findAll().stream().map(productMapper::productToProductDTO).toList();
     }
 
     public ProductDTO getProductById(Long id) {
