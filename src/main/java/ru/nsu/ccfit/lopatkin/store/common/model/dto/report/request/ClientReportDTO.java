@@ -29,5 +29,5 @@ public class ClientReportDTO {
     private LocalDate periodEnd;
 
     @Positive
-    private Long count;
+    private Integer count;
 }

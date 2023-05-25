@@ -1,5 +1,6 @@
 package ru.nsu.ccfit.lopatkin.store.processor.controller.primitive;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class SupplierController {
 
 
     @PostMapping("/new")
-    public SupplierDTO createSupplier(@RequestBody SupplierDTO supplierDTO) {
+    public SupplierDTO createSupplier(@Valid @RequestBody SupplierDTO supplierDTO) {
         return supplierService.createSupplier(supplierDTO);
     }
 

@@ -1,6 +1,7 @@
 package ru.nsu.ccfit.lopatkin.store.common.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,14 +39,14 @@ public class ProductDTO extends BaseDTO {
     @NotBlank
     private String productName;
 
-    @NotBlank
+    @NotNull
     private ProductTypeDTO productType;
 
-    @NotBlank
+    @NotNull
     @Positive
     private Integer productSize;
 
-    @NotBlank
+    @NotNull
     private SupplierDTO supplier;
 
     @IsPrice
